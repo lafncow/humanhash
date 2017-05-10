@@ -104,7 +104,7 @@ class HumanHasher(object):
 
             >>> digest = '60ad8d0d871b6095808297'
             >>> HumanHasher().humanize_list(digest)
-            ['sodium', 'magnesium', 'nineteen', 'hydrogen']
+            ['equal', 'monkey', 'lake', 'beryllium']
         """
         # Gets a list of byte values between 0-255.
         bytes_ = map(lambda x: int(x, 16),
@@ -123,11 +123,11 @@ class HumanHasher(object):
 
             >>> digest = '60ad8d0d871b6095808297'
             >>> HumanHasher().humanize(digest)
-            'sodium-magnesium-nineteen-hydrogen'
+            'equal-monkey-lake-beryllium'
             >>> HumanHasher().humanize(digest, words=6)
-            'hydrogen-pasta-mississippi-august-may-lithium'
+            'sodium-magnesium-nineteen-william-alanine-nebraska'
             >>> HumanHasher().humanize(digest, separator='*')
-            'sodium*magnesium*nineteen*hydrogen'
+            'equal*monkey*lake*beryllium'
         """
         # Map the compressed byte values through the word list.
         return separator.join(self.humanize_list(hexdigest, words))
@@ -140,9 +140,9 @@ class HumanHasher(object):
 
             >>> bytes_ = [96, 173, 141, 13, 135, 27, 96, 149, 128, 130, 151]
             >>> list(HumanHasher.compress(bytes_, 4))
-            [205, 128, 156, 96]
+            [64, 145, 117, 21]
 
-        If there are less than the target number bytes, the input bytes will be returned
+        If there are less than the target number bytes, return input bytes
 
             >>> list(HumanHasher.compress(bytes_, 15))  # doctest: +ELLIPSIS
             [96, 173, 141, 13, 135, 27, 96, 149, 128, 130, 151]
@@ -151,12 +151,12 @@ class HumanHasher(object):
         bytes_list = list(bytes_)
 
         length = len(bytes_list)
-        # If there are less than the target number bytes, the input bytes will be returned
+        # If there are less than the target number bytes, return input bytes
         if target >= length:
             return bytes_
 
         # Split `bytes` evenly into `target` segments
-        # Each segment will be composed of `seg_size` bytes, rounded down for some segments
+        # Each segment hashes `seg_size` bytes, rounded down for some
         seg_size = float(length) / float(target)
         # Initialize `target` number of segments
         segments = [0] * target
@@ -164,7 +164,7 @@ class HumanHasher(object):
 
         # Use a simple XOR checksum-like function for compression
         for i, byte in enumerate(bytes_list):
-            # Divide the byte index by the segment size to determine which segment to place it in
+            # Divide the byte index by the segment size to assign its segment
             # Floor to create a valid segment index
             # Min to ensure the index is within `target`
             seg_num = min(int(math.floor(i / seg_size)), target-1)
